@@ -65,14 +65,15 @@
 	
 	<body>
 		<%
-			String username = (String) session.getAttribute("username");
-			System.out.println("user: " + username);
-			boolean isIn = Boolean.valueOf(String.valueOf(session.getAttribute("login")));
-			System.out.println("login: " + isIn);
 
-			if (!isIn || username == null || username.isEmpty()) {
-				request.getRequestDispatcher("/signin").forward(request, response);
-			}
+//			String username = (String) session.getAttribute("username");
+//			System.out.println("user: " + username);
+//			boolean isIn = Boolean.valueOf(String.valueOf(session.getAttribute("login")));
+//			System.out.println("login: " + isIn);
+//
+//			if (!isIn || username == null || username.isEmpty()) {
+//				request.getRequestDispatcher("/signin").forward(request, response);
+//			}
 		%>
 		<!-- Start: Header -->
 		<%--<jsp:include page="partitials/head.jsp"></jsp:include>--%>
@@ -689,7 +690,7 @@
 													<h6 class="bk-margin-off bk-docs-font-weight-300">JAKARTA SELATAN <small>(IST)</small></h6>
 												</div>
 												<div class="panel-body bk-bg-white text-center bk-padding-top-15 bk-padding-bottom-15">
-													<canvas class="wind" width="60" height="60"</canvas>
+													<canvas class="wind" width="60" height="60">
 												</div>
 												<div class="panel-body bk-bg-white text-center">
 													<h1 class="bk-margin-off-top">78°</h1>

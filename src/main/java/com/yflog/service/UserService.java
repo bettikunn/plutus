@@ -1,65 +1,49 @@
 package com.yflog.service;
 
-import com.yflog.common.ErrorCodes;
 import com.yflog.dao.UserDao;
-import com.yflog.dao.utils.DbUtils;
-import com.yflog.domain.User;
-import com.yflog.service.exception.AuthException;
-import com.yflog.service.exception.ParamException;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
-
-import static com.yflog.common.ErrorCodes.AUTH_PASSWORD_MISMATCH;
-import static com.yflog.common.ErrorCodes.AUTH_USER_NOT_REGISTERED;
+import com.yflog.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
- * Created by vincent on 9/1/16.
- * User service
+ * Created by vincent on 9/28/16.
  */
+@Service("userService")
 public class UserService {
-    public static User addUser(User user) throws ParamException, SQLException {
-        if (user.getUsername() == null || user.getUsername().isEmpty()) {
-            throw new ParamException("user name should not be empty");
-        }
 
-        Connection conn = null;
-        try {
-            conn = DbUtils.getAutoCommitConnection();
-            User returnVal = new UserDao().addUser(conn, user);
-            return returnVal;
-        }
-        catch (SQLException e) {
-            DbUtils.rollbackQuietly(conn);
-            throw e;
-        }
-        finally {
-            DbUtils.closeQuietly(conn);
-        }
+    @Autowired
+    private UserDao userDao;
+
+    public UserDao getUserDao() {
+        return userDao;
     }
 
-    public static void validUser(String username, String password) throws AuthException, SQLException {
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-            throw new AuthException(ErrorCodes.COMMON_INVALID_PARAMETERS, "Username and Password cannot be null");
-        }
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
-        Connection conn = null;
-        try {
-            conn = DbUtils.getAutoCommitConnection();
-            User user = new UserDao().getByUsername(conn, username);
+    public void save(User user) {
+        userDao.save(user);
+    }
 
-            if (user == null) {
-                throw new AuthException(AUTH_USER_NOT_REGISTERED, String.format("User %s not registered", username));
-            }
+    public void update(User user) {
+        userDao.update(user);
+    }
 
-            if (!password.equals(user.getPassword())) {
-                throw new AuthException(AUTH_PASSWORD_MISMATCH, "Password mismatch");
-            }
+    public void delete(User user) {
+        userDao.delete(user);
+    }
 
-        }
-        finally {
-            DbUtils.closeQuietly(conn);
-        }
+
+    public User getById(int id) {
+        return userDao.getById(id);
+    }
+
+    public User getByUserName(String name) {
+        return userDao.getByUsername(name);
+    }
+
+    public User getByEmail(String email) {
+        return userDao.getByEmail(email);
     }
 }
