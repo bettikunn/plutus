@@ -1,6 +1,8 @@
 package com.yflog;
 
+import com.yflog.entity.Tag;
 import com.yflog.entity.User;
+import com.yflog.service.TagService;
 import com.yflog.service.UserService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -35,5 +37,22 @@ public class App {
 
         user2 = userService.getByEmail("not@sds");
         System.out.println(user2);
+
+
+        Tag tag = new Tag();
+        tag.setName("test");
+        tag.setType(1);
+        tag.setDesc("This is a test");
+
+        TagService tagService = (TagService) context.getBean("tagService");
+        tagService.save(tag);
+        System.out.println(tag);
+
+        Tag tag2 = tagService.getById(tag.getId());
+        System.out.println(tag2);
+
+        tag2 = tagService.getByName(tag.getName());
+
+
     }
 }

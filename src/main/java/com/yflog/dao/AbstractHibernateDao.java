@@ -1,19 +1,26 @@
 package com.yflog.dao;
 
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+
+import javax.annotation.Resource;
 
 /**
  * Created by vincent on 9/28/16.
  */
-public interface AbstractHibernateDao<T> {
+public abstract class AbstractHibernateDao<T> extends HibernateDaoSupport {
 
-    void save(T o);
+    @Resource
+    public void setSessionFactory0(SessionFactory sessionFactory){
+        super.setSessionFactory(sessionFactory);
+    }
 
-    void update(T o);
 
-    void delete(T o);
+    public abstract void save(T o);
 
-    T getById(int id);
+    public abstract void update(T o);
+
+    public abstract void delete(T o);
+
+    public abstract T getById(int id);
 }

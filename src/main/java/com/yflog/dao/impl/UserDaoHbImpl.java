@@ -15,12 +15,7 @@ import java.util.List;
  * Created by vincent on 9/28/16.
  */
 @Repository("userDao")
-public class UserDaoHbImpl extends HibernateDaoSupport implements UserDao {
-
-    @Resource
-    public void setSessionFactory0(SessionFactory sessionFactory){
-        super.setSessionFactory(sessionFactory);
-    }
+public class UserDaoHbImpl extends UserDao {
 
     @Override
     @Transactional

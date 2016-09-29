@@ -5,8 +5,8 @@ import com.yflog.entity.User;
 /**
  * Created by vincent on 9/28/16.
  */
-public interface UserDao extends AbstractHibernateDao<User>  {
-    User getByUsername(String name);
+public abstract class UserDao extends AbstractHibernateDao<User>  {
+    public abstract User getByUsername(String name);
 
-    User getByEmail(String email);
+    public abstract User getByEmail(String email);
 }
